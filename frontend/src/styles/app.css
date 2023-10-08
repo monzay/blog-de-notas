@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.app{
+    width: 100%;
+    height: 100vh;
+    background-color:  rgb(0, 0, 0);
+    display: flex;
+    overflow: hidden;
+    
+}
+.panel-occiones-tareas{
+    width: 18%;
+    height: 100vh;
+    border: 1px solid black;
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.conteiner-paneles{
+    width: 78%;
+    height: 100vh;
+}
+
+
+.panel-mostrar-tareas {
+    width: 100%;
+    height: 85vh;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contenedor-de-tareas{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.conteiner-mandar-menjases{
+    width: 95%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.input-escribir-mensaje{
+    width: 40%;
+    height: 40px;
+    outline: none;
+    border: none;
+    box-shadow:  0px 0px 2px 1px;
+    border-radius: 3px;
+    
+    
+    
+}
+.btn-mandar-mensaje{
+    width: 60px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+
+}
+.tarea{
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: rgb(255, 255, 255);
+    padding: 20px 0px;
+    margin:7px;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+    font-family: 'Montserrat', sans-serif;
+    padding: 20px 10px;
+}
+.animacion-de-la-tarea-al-crearla{
+    animation:blur-in 0.4s linear both;
+}
+ @keyframes blur-in{0%{filter:blur(12px);opacity:0}100%{filter:blur(0);opacity:1}}
+
+
+
+
+.obciones{
+    width:  87%;
+    height: 207px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin: 4px;
+}
+.obciones:hover{
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+.obciones-tarea-icon{
+    font-size: 80px;
+}
+
+
+/* componente */
+
+.caja-mostrar-tarea-con-tiempo{
+    width: 650px;
+    height: 370px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    margin-top: 8%;
+    margin-left: 10% ;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    
+}
+.tarea-seleccionada{
+    font-size: 60px;
+}
+.tiempo{
+    font-size: 100px;
+    
+}
+
+
+.number{
+    width: 90%;
+    height: 100px;
+    background-color: white;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+.number:hover{
+    background-color: black;
+    color: white;
+    animation: agrandar 0.5s ;
+ 
+}
+
+@keyframes agrandar {
+ 
+    100% {
+        transform: scale(1.1, 1.1); /* Escala al tamaño original */
+    }
+}
+
+
+::-webkit-scrollbar {
+    width: 12px; /* Ancho del scrollbar */
+  }
+  
+
+  
+.conteiner-horas{
+    overflow-y: scroll;
+    height: 100vh;
+    font-size: 30px;
+    width: 100%;
+}
+  
+.conteiner-minutos{
+    overflow-y: scroll;
+    height: 100vh;
+    font-size: 30px;
+}
+
+.panel-elegir-tiempo{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+}
+  
+ 
+
+.input-new-tarea{
+    outline: none;
+    border: none;
+    color: white;
+    background-color: rgb(49, 48, 48);
+    width: 100%;
+    overflow-wrap: break-word;
+    
+}
+
+
+.contenedor-box-tiempo-y-icono{
+    width: 100%;
+    height: 87vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.contenedor-btns{
+    width: 100%;
+    height: 8vh ;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.contenedor-btns-btn{
+    margin: 0px 1px;
+    width: 100px;
+    height: 90%;
+    border: none;
+    border-radius: 3px;
+    
+}
+.contenedor-btns-btn:hover{
+    background-color: black;
+    color: white;
+    border:1px solid white;
+}
+.ul-contenedor-tareas{
+list-style: none;
+}
+.contenedor-obciones{
+    height: 10px;
+    display: flex;
+}
+.hora-de-la-tarea{
+    height: 30px;
+}
+.tarea-escrita{
+
+}
+.btn-de-las-acciones-de-las-tareas{
+    width:20px;
+    height: 20px;
+    border-radius: 100px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.volever-atras-icono{
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: white;
+    margin-top:  15px;
+}
+
+.marcar-la-caja-del-tiempo-seleccionado{
+    color: white;
+background-color: black;
+}
+
+.mensaje-de-bienvenida{
+    font-size: 100px;
+    color: white;
+    position: absolute;
+    z-index: 12;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 200px; /* Ancho del div */
+    height: 200px; /* Altura del div */
+}
