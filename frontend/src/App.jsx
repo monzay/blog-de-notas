@@ -3,8 +3,6 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 // estilos y bibliotecas
 import "./styles/app.css";
 import "animate.css";
-import 'atropos/css'
-
 
 //bibliotecas de react-icons
 import { AiOutlineFieldTime } from "react-icons/ai";
@@ -21,6 +19,8 @@ import { OccionesTareas } from "./ComponentesApp/OccionesTareas";
 import { ContextMostrarModel } from "./Providers/TrueFalseProvider/MostrarModel";
 
 import { generarBox } from "./funciones/GenerarBox";
+import { PanelDeHistorial } from "./ComponentesApp/PanelDeHistorial";
+import { BoxMostrarTarea } from "./ComponentesApp/BoxMostrarTarea";
 export const App = () => {
   //contextos
   const { tareas, setTareas } = useContext(contextTareas);
@@ -29,18 +29,27 @@ export const App = () => {
   const [minutos, setMinnuto] = useState(null);
 
   const [mostrarBoxNumber, setMostrarBoxNumeber] = useState(true);
-  const [marcarBox, setMarcarBox] = useState(false);
   const [idBoxMinutos, setIdBoxMinutos] = useState(0);
   const [idBoxHoras, setIdBoxHoras] = useState(0);
-  const [mostrarMensajeDeBienvenida,setMostrarMensajeDeBienvenida] = useState(false)
+  const [mostrarMensajeDeBienvenida, setMostrarMensajeDeBienvenida] =
+    useState(false);
+  
+    const [mostrarModelTareaAlarma,setMostrarModelTareaAlarma] = useState(false)
+    const [mostrarPanelInfo,setMostrarPanelInfo] = useState(false)
 
+
+    useEffect(() => {
+      if(localStorage.length === 1 ){
+        localStorage.setItem("tareas",JSON.stringify([]))
+      }
+    }, [])
+        
   useEffect(() => {
-    if (localStorage.length === 1){
-      localStorage.setItem("tareas", JSON.stringify([]));
-    }
-    
-    else setTareas(JSON.parse(localStorage.getItem("tareas")));
-  }, []);
+    if (tareas.length === 0) setMostrarMensajeDeBienvenida(true);
+    else setMostrarMensajeDeBienvenida(false);
+  }, [tareas]);
+
+
 
   const info = [
     {
@@ -68,33 +77,30 @@ export const App = () => {
 
   return (
     <div className="app">
-       
       <div className="panel-occiones-tareas">
         {mostrarTiempo ? (
           <div className="panel-elegir-tiempo">
             <div className="contenedor-box-tiempo-y-icono">
-              <div
-                onClick={() => setMostrarTiempo(false)}
-                className="volever-atras-icono"
-              >
+
+              <div onClick={() => setMostrarTiempo(false)}  className="volever-atras-icono"  >
                 <BiChevronLeft />
               </div>
-
+              
               <div className="conteiner-horas">
                 {mostrarBoxNumber
                   ? generarBox(24).map((num, index) => (
                       <div
                         style={
-                          index === idBoxHoras
+                          index === idBoxHoras 
                             ? { backgroundColor: "black", color: "white" }
                             : null
                         }
-                        className="number  "
+                        className="number"
                         key={num}
                         onClick={() => {
                           setHora(num);
                           setIdBoxHoras(index);
-                          setMostrarBoxNumeber(false)
+                          setMostrarBoxNumeber(false);
                         }}
                       >
                         {num}
@@ -107,7 +113,6 @@ export const App = () => {
                         onClick={() => {
                           setMinnuto(num);
                           setIdBoxMinutos(index);
-                          
                         }}
                         style={
                           index === idBoxMinutos
@@ -149,10 +154,21 @@ export const App = () => {
           ))}
       </div>
       <div className="conteiner-paneles">
-        { mostrarMensajeDeBienvenida && <h1 className="mensaje-de-bienvenida">Bienvenido </h1> }
+
+        {mostrarMensajeDeBienvenida && (
+          <h1
+            className={`mensaje-de-bienvenida ${
+              mostrarMensajeDeBienvenida
+                ? "mostrar-mensaje-de-la-bienvenida"
+                : null
+            }`}
+          >
+            Bienvenido{" "}
+          </h1>
+        )}
         <div className="panel-mostrar-tareas">
           {tareas &&
-            [1,2,3,4].map((number) => (
+            [1, 2, 3, 4].map((number) => (
               <ul key={number} className="ul-contenedor-tareas">
                 {tareas.map((tarea, i) =>
                   tarea.id === number ? (
@@ -162,18 +178,30 @@ export const App = () => {
                       tarea={tarea.tarea}
                       tiempoHora={tarea.hora}
                       tiempoMinutos={tarea.minutos}
+                      setMostrarModelTareaAlarma={setMostrarModelTareaAlarma}
                     />
                   ) : null
                 )}
               </ul>
             ))}
         </div>
+        {
+          mostrarPanelInfo &&   <PanelDeHistorial setMostrarPanelInfo={setMostrarPanelInfo} /> 
+        }
+        <div className="contenedor-form-y-panel"> 
         <ControlesFrom
           hora={hora}
           minutos={minutos}
           mostrarBoxNumber={mostrarBoxNumber}
+          setMostrarBoxNumeber={setMostrarBoxNumeber}
         />
+        <div className="icono-panel" onClick={()  => setMostrarPanelInfo(!mostrarPanelInfo)}>
+        </div>
+        </div>
+        {
+          mostrarModelTareaAlarma && <BoxMostrarTarea mostrarModelTareaAlarma={mostrarModelTareaAlarma} setMostrarModelTareaAlarma={setMostrarModelTareaAlarma} />
+        }
       </div>
     </div>
-  );
+  ); 
 };

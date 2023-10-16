@@ -7,65 +7,77 @@ import {
   MostrarModel,
 } from "../Providers/TrueFalseProvider/MostrarModel";
 
-export const ControlesFrom = ({ hora, minutos }) => {
-  // estados
+export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
+
+
   const [mensaje, setMensaje] = useState("");
   const [id,setId]= useState(1)
 
-  const {
-    mostrarControlesTareasProgramadas,
-    mostrarControlesTareasRandoms,
-    mostrarControlesTareasTemporizadas,
-    setMostrarControlesTareasProgramadas
-  } = useContext(contextContreles);
+  const { mostrarControlesTareasProgramadas,  mostrarControlesTareasRandoms, mostrarControlesTareasTemporizadas,setMostrarControlesTareasProgramadas} = useContext(contextContreles);
+
   const { tareas, setTareas } = useContext(contextTareas);
-  const { tiempo, setTiempo } = useContext(ContextIdTarea);
-  const { setMostrarModel, setMostrarAnimacionTarea, setMostrarTiempo } =
-    useContext(ContextMostrarModel);
+  const { tiempo } = useContext(ContextIdTarea);
+  const { setMostrarModel, setMostrarAnimacionTarea, setMostrarTiempo } = useContext(ContextMostrarModel);
 
   const inputTarea = useRef();
 
+// cada vez  que se manda una tarea a loaclStorage agarra el ultimo id y se lo pone a la siguiente parea
   useEffect(() => {
-    if(tareas.length > 0){
-      const ultimoId = tareas.slice(-1)[0] 
-      setId(ultimoId) 
+    if (tareas.length > 0) {
+      const ultimoId = tareas.slice(-1)[0].id;
+      setId( prev => prev === 4 ? 1 : ultimoId + 1 );
+    } else {
+      setId(1);
     }
+  }, [tareas]);
+
+  useEffect(() => {
+    setTareas(JSON.parse(localStorage.getItem("tareas")))
   }, [])
+  
+  useEffect(() => {
+     if(tareas.length > 0 ){
+      localStorage.setItem("tareas", JSON.stringify(tareas));
+     }
+  }, [tareas]);
 
   const tareasProgramadas = (e) => {
     e.preventDefault();
 
     if (mensaje !== "") {
       if (mostrarControlesTareasProgramadas) {
-       
-          setId( prev => prev === 4 ? 1 : prev + 1)
 
-        if (hora === null) {
+        if (hora === null  ) {
           let dataTarea = {
             id ,
             tarea: mensaje,
             hora: hora,
             minutos: minutos,
+            tareaEcha:0,
+            tareaNoEcha:0
           };
           setTareas((prev) => [...prev, dataTarea]);
-          localStorage.setItem("tareas", JSON.stringify(tareas));
+
         } else {
+          
           const b = hora.split(":");
           const horaSacada = Number(b[0]);
+
           let dataTarea = {
             id,
             tarea: mensaje,
             hora: horaSacada,
             minutos: minutos,
+            tareaEcha:0,
+            tareaNoEcha:0
           };
 
           setTareas((prev) => [...prev, dataTarea]);
-          localStorage.setItem("tareas", JSON.stringify(tareas));
           setMostrarControlesTareasProgramadas(false)
         }
-
         setMostrarAnimacionTarea(true);
         setMostrarTiempo(false);
+        setMostrarBoxNumeber(true)
         
       } else if (mostrarControlesTareasTemporizadas) {
         if (tiempo) {

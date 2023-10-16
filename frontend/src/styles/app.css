@@ -4,28 +4,43 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+
+/* styles of the App */
+
 .app{
     width: 100%;
     height: 100vh;
-    background-color:  rgb(0, 0, 0);
+    background-color:  rgb(15, 15, 15);
     display: flex;
     overflow: hidden;
+    align-items: center;
     
 }
 .panel-occiones-tareas{
     width: 18%;
     height: 100vh;
-    border: 1px solid black;
    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 
 }
-.conteiner-paneles{
-    width: 78%;
+.panel-elegir-tiempo{
+    width: 100%;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+}
+  
+.conteiner-paneles{
+    width: 80%;
+    height:98vh;
+    border-radius: 5px;
+    padding-left: 20px;
 }
 
 
@@ -45,11 +60,10 @@
 }
 
 .conteiner-mandar-menjases{
-    width: 95%;
+    width: 100%;
     height: 10vh;
     display: flex;
     align-items: center;
-    padding-left: 30px;
 }
 
 .input-escribir-mensaje{
@@ -63,6 +77,37 @@
     
     
 }
+.contenedor-box-tiempo-y-icono{
+    width: 100%;
+    height: 87vh;
+    display: flex;
+    overflow: hidden;
+    justify-content: center; 
+}
+
+.contenedor-btns{
+    width: 100%;
+    height: 8vh ;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.contenedor-btns-btn{
+    margin: 0px 1px;
+    width: 100px;
+    height: 90%;
+    border: none;
+    border-radius: 3px;
+    
+}
+.contenedor-btns-btn:hover{
+    background-color: black;
+    color: white;
+    border:1px solid white;
+}
 .btn-mandar-mensaje{
     width: 60px;
     height: 40px;
@@ -70,18 +115,8 @@
     border: none;
 
 }
-.tarea{
-    width: 250px;
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    color: rgb(255, 255, 255);
-    padding: 20px 0px;
-    margin:7px;
-    border-radius: 4px;
-    overflow-wrap: break-word;
-    font-family: 'Montserrat', sans-serif;
-    padding: 20px 10px;
-}
+
+
 .animacion-de-la-tarea-al-crearla{
     animation:blur-in 0.4s linear both;
 }
@@ -159,13 +194,9 @@
         transform: scale(1.1, 1.1); /* Escala al tamaño original */
     }
 }
-
-
 ::-webkit-scrollbar {
     width: 12px; /* Ancho del scrollbar */
   }
-  
-
   
 .conteiner-horas{
     overflow-y: scroll;
@@ -180,57 +211,11 @@
     font-size: 30px;
 }
 
-.panel-elegir-tiempo{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    
-}
-  
+
  
 
-.input-new-tarea{
-    outline: none;
-    border: none;
-    color: white;
-    background-color: rgb(49, 48, 48);
-    width: 100%;
-    overflow-wrap: break-word;
-    
-}
 
 
-.contenedor-box-tiempo-y-icono{
-    width: 100%;
-    height: 87vh;
-    display: flex;
-    overflow: hidden;
-}
-
-.contenedor-btns{
-    width: 100%;
-    height: 8vh ;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    
-    justify-content: space-around;
-    margin-top: 15px;
-}
-.contenedor-btns-btn{
-    margin: 0px 1px;
-    width: 100px;
-    height: 90%;
-    border: none;
-    border-radius: 3px;
-    
-}
-.contenedor-btns-btn:hover{
-    background-color: black;
-    color: white;
-    border:1px solid white;
-}
 .ul-contenedor-tareas{
 list-style: none;
 }
@@ -238,12 +223,8 @@ list-style: none;
     height: 10px;
     display: flex;
 }
-.hora-de-la-tarea{
-    height: 30px;
-}
-.tarea-escrita{
 
-}
+
 .btn-de-las-acciones-de-las-tareas{
     width:20px;
     height: 20px;
@@ -281,3 +262,175 @@ background-color: black;
     width: 200px; /* Ancho del div */
     height: 200px; /* Altura del div */
 }
+
+.mostrar-mensaje-de-la-bienvenida{
+    animation: mostrarBienvenida 1s ;
+
+}
+@keyframes mostrarBienvenida {
+    0%{
+        transform:  translateY(-100px);
+        opacity: 0;
+    }    
+}
+
+
+
+
+
+/* styles of the BoxOBcionesDelasTareas */ 
+
+
+.contenedor-todas-obciones-de-las-tareas{
+    width: 100px; 
+  
+    position: absolute ;
+    right: -60px;
+    top: 35px;
+}
+.contenedor-todas-obciones-obciones{
+    height: 30px;
+    width: 100%;
+    border: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter:  blur(10px); 
+    display: flex;
+    align-items: center; 
+    padding-left: 5px; 
+}
+
+
+/* styles of the ComTarea */
+.tarea{
+    width: 250px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    color: rgb(255, 255, 255);
+    padding: 20px 0px;
+    margin:7px;
+    border-radius: 4px;
+    overflow-wrap: break-word;
+    font-family: 'Montserrat', sans-serif;
+    padding: 20px 10px;
+    display: flex;
+} 
+
+.input-new-tarea{
+    outline: none;
+    border: none;
+    color: white;
+    background-color: rgb(49, 48, 48);
+    width: 100%;
+    overflow-wrap: break-word;
+    
+}
+
+.tarea-escrita{
+
+}
+.hora-de-la-tarea{
+}
+
+
+
+.texto-editado{
+    all: unset; /* Elimina todas las propiedades por defecto */
+    overflow: hidden; /* Oculta el contenido que excede el ancho */
+    text-overflow: ellipsis; 
+}
+
+
+/* nose   */
+
+.contenedor-form-y-panel{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.icono-panel{
+     width: 30px;
+     height: 30px; 
+     background-color: white; 
+     border-radius: 50%;
+}
+
+
+
+.panel-informacion{
+    width: 400px; 
+    height:  100%;
+    background-color: white;
+    position: absolute; 
+    top: 0;
+    right: 0;  
+    border-radius: 5px;
+    display: flex;
+    
+}
+
+
+
+
+/* PanelDeHistorial */
+.contenedor-de-las-estadiscas{
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.estadiscas-de-la-tarea{
+    width: 96%;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    padding: 10px 0px;
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+}
+.tarea-escrita-del-panel-de-estadistica{
+    padding: 5px 0px;
+}
+
+/* styles of the BoxMostrarTareas*/
+.model-mostrar-tarea{
+    width: 300px;
+    height:  200px; 
+    background: white;
+    position: absolute;
+     top: 0;
+     right: 0;
+     left: 0;
+     bottom: 0;
+     margin: auto;
+     border-radius: 10px; 
+
+} 
+.contenedor-informacion-de-las-semanas-que-se-hicieron-las-tareas{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+.contenedor-informacion{
+    display: fle;
+    flex-wrap: wrap;
+
+}
+.tareas-completadas{
+    width: 20px ;
+    height: 20px ;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 3px;
+    
+}
+
+.panel-informacion-icono-salir-del-panel{
+    font-size: 30px;
+}
+
