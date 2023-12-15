@@ -5,10 +5,8 @@ import "./styles/app.css";
 import "animate.css";
 
 //bibliotecas de react-icons
-import { AiOutlineFieldTime } from "react-icons/ai";
-import { FaPencilAlt } from "react-icons/fa";
-import { BiTimeFive } from "react-icons/bi";
-import { BiChevronLeft } from "react-icons/bi";
+
+import { BiChevronLeft, BiNoEntry } from "react-icons/bi";
 
 // contextos
 import { contextTareas } from "./Providers/tareasProvider";
@@ -21,104 +19,114 @@ import { ContextMostrarModel } from "./Providers/TrueFalseProvider/MostrarModel"
 import { generarBox } from "./funciones/GenerarBox";
 import { PanelDeHistorial } from "./ComponentesApp/PanelDeHistorial";
 import { BoxMostrarTarea } from "./ComponentesApp/BoxMostrarTarea";
+import { EstadoTiempoContexto } from "./Providers/estadoTiempoProvider";
+import { info } from "./variableGlobales/Info";
 export const App = () => {
   //contextos
   const { tareas, setTareas } = useContext(contextTareas);
   const { mostrarTiempo, setMostrarTiempo } = useContext(ContextMostrarModel);
+
+
+  const [tiempoHora,setTiempoHora] = useState([])
+  const [tiempoMinutos,setTiempoMinutos ] =  useState([])
+  //esto  
   const [hora, setHora] = useState(null);
   const [minutos, setMinnuto] = useState(null);
 
   const [mostrarBoxNumber, setMostrarBoxNumeber] = useState(true);
-  const [idBoxMinutos, setIdBoxMinutos] = useState(0);
-  const [idBoxHoras, setIdBoxHoras] = useState(0);
   const [mostrarMensajeDeBienvenida, setMostrarMensajeDeBienvenida] =
     useState(false);
-  
-    const [mostrarModelTareaAlarma,setMostrarModelTareaAlarma] = useState(false)
-    const [mostrarPanelInfo,setMostrarPanelInfo] = useState(false)
+
+  const [mostrarModelTareaAlarma, setMostrarModelTareaAlarma] = useState(false);
+  const [mostrarPanelInfo, setMostrarPanelInfo] = useState(false);
 
 
-    useEffect(() => {
-      if(localStorage.length === 1 ){
-        localStorage.setItem("tareas",JSON.stringify([]))
-      }
-    }, [])
-        
+  //cargar datos de la base de datos
+
+
+  useEffect(() => {
+    if (localStorage.length === 1) {
+      localStorage.setItem("tareas", JSON.stringify([]));
+    }
+  }, []);
+
   useEffect(() => {
     if (tareas.length === 0) setMostrarMensajeDeBienvenida(true);
     else setMostrarMensajeDeBienvenida(false);
   }, [tareas]);
 
+  // logica para agregar el tiempo a las box en horas 
+  useEffect(() => {
+    setTiempoHora([])
+    let numeros = []
+    for(let i=0;i<=24;i++){
+      numeros.push(i)
+    }
+     let index = 0
+      const interval  = setInterval(() => {
+        if (index === numeros.length) {
+          clearInterval(interval);
+          return;
+        }
+        setTiempoHora( prevHoras => [...prevHoras,numeros[index]])
+         index++
+       },200);
+  
+      return () => clearInterval(interval)
+  }, [!mostrarTiempo,mostrarBoxNumber])
 
+  // logica para agregar el tiempo en la box en minutos 
+  useEffect(() => {
+    setTiempoMinutos([])
+    let numeros = []
+    for(let i=0;i<=60;i++){
+      numeros.push(i)
+    }
+     let index = 0
+      const interval  = setInterval(() => {
+        if (index === numeros.length) {
+          clearInterval(interval);
+          return;
+        }
+        setTiempoMinutos( prevMinutos => [...prevMinutos,numeros[index]])
+         index++
+       },100);
+  
+      return () => clearInterval(interval)
+  }, [mostrarBoxNumber])
 
-  const info = [
-    {
-      name: FaPencilAlt,
-      boleano1: false,
-      boleano2: true,
-      boleano3: false,
-      title: "Tarea Programadas",
-    },
-    {
-      name: AiOutlineFieldTime,
-      boleano1: true,
-      boleano2: false,
-      boleano3: false,
-      title: "Tareas Temporizadas",
-    },
-    {
-      name: BiTimeFive,
-      boleano1: false,
-      boleano2: false,
-      boleano3: true,
-      title: "Tarea Randoms",
-    },
-  ];
 
   return (
     <div className="app">
       <div className="panel-occiones-tareas">
-        {mostrarTiempo ? (
+      {mostrarTiempo ? (
           <div className="panel-elegir-tiempo">
             <div className="contenedor-box-tiempo-y-icono">
-
-              <div onClick={() => setMostrarTiempo(false)}  className="volever-atras-icono"  >
+              <div
+                onClick={() => setMostrarTiempo(false)}
+                className="volever-atras-icono"
+              >
                 <BiChevronLeft />
               </div>
-              
               <div className="conteiner-horas">
                 {mostrarBoxNumber
-                  ? generarBox(24).map((num, index) => (
+                  ? tiempoHora.map((num, index) => (
                       <div
-                        style={
-                          index === idBoxHoras 
-                            ? { backgroundColor: "black", color: "white" }
-                            : null
-                        }
-                        className="number"
-                        key={num}
+                      className="number animar-el-ultimo-box"
+                        key={index}
                         onClick={() => {
                           setHora(num);
-                          setIdBoxHoras(index);
-                          setMostrarBoxNumeber(false);
+                          setMostrarBoxNumeber(false)
                         }}
                       >
-                        {num}
+                       { num < 10  ? `0${num}` : num}
                       </div>
                     ))
-                  : generarBox(60).map((num, index) => (
+                  : tiempoMinutos.map((num, index) => (
                       <div
-                        className="number"
-                        key={num}
-                        onClick={() => {
-                          setMinnuto(num);
-                          setIdBoxMinutos(index);
-                        }}
-                        style={
-                          index === idBoxMinutos
-                            ? { backgroundColor: "black", color: "white" }
-                            : null
-                        }
+                        className="number animar-el-ultimo-box"
+                        key={index}
+                        onClick={()=> setMinnuto(num)}
                       >
                         {num}
                       </div>
@@ -129,18 +137,23 @@ export const App = () => {
               <button
                 onClick={() => setMostrarBoxNumeber(true)}
                 className="contenedor-btns-btn"
+                style={mostrarBoxNumber ? {backgroundColor:"green"} : null}
               >
                 hora
               </button>
               <button
                 onClick={() => setMostrarBoxNumeber(false)}
                 className="contenedor-btns-btn"
+                style={!mostrarBoxNumber ? {backgroundColor:"green"} : null}
               >
                 minutos
               </button>
             </div>
           </div>
         ) : null}
+         
+        
+   
         {!mostrarTiempo &&
           info.map((info, i) => (
             <OccionesTareas
@@ -154,7 +167,6 @@ export const App = () => {
           ))}
       </div>
       <div className="conteiner-paneles">
-
         {mostrarMensajeDeBienvenida && (
           <h1
             className={`mensaje-de-bienvenida ${
@@ -170,7 +182,7 @@ export const App = () => {
           {tareas &&
             [1, 2, 3, 4].map((number) => (
               <ul key={number} className="ul-contenedor-tareas">
-                {tareas.map((tarea, i) =>
+                {tareas.map((tarea,i) => 
                   tarea.id === number ? (
                     <ComTarea
                       key={i}
@@ -185,23 +197,28 @@ export const App = () => {
               </ul>
             ))}
         </div>
-        {
-          mostrarPanelInfo &&   <PanelDeHistorial setMostrarPanelInfo={setMostrarPanelInfo} /> 
-        }
-        <div className="contenedor-form-y-panel"> 
-        <ControlesFrom
-          hora={hora}
-          minutos={minutos}
-          mostrarBoxNumber={mostrarBoxNumber}
-          setMostrarBoxNumeber={setMostrarBoxNumeber}
-        />
-        <div className="icono-panel" onClick={()  => setMostrarPanelInfo(!mostrarPanelInfo)}>
+        {mostrarPanelInfo && (
+          <PanelDeHistorial setMostrarPanelInfo={setMostrarPanelInfo} />
+        )}
+        <div className="contenedor-form-y-panel">
+          <ControlesFrom
+            hora={hora}
+            minutos={minutos}
+            mostrarBoxNumber={mostrarBoxNumber}
+            setMostrarBoxNumeber={setMostrarBoxNumeber}
+          />
+          <div
+            className="icono-panel"
+            onClick={() => setMostrarPanelInfo(!mostrarPanelInfo)}
+          ></div>
         </div>
-        </div>
-        {
-          mostrarModelTareaAlarma && <BoxMostrarTarea mostrarModelTareaAlarma={mostrarModelTareaAlarma} setMostrarModelTareaAlarma={setMostrarModelTareaAlarma} />
-        }
+        {mostrarModelTareaAlarma && (
+          <BoxMostrarTarea
+            mostrarModelTareaAlarma={mostrarModelTareaAlarma}
+            setMostrarModelTareaAlarma={setMostrarModelTareaAlarma}
+          />
+        )}
       </div>
     </div>
-  ); 
+  );
 };

@@ -19,7 +19,6 @@ export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
   const { tiempo } = useContext(ContextIdTarea);
   const { setMostrarModel, setMostrarAnimacionTarea, setMostrarTiempo } = useContext(ContextMostrarModel);
 
-  const inputTarea = useRef();
 
 // cada vez  que se manda una tarea a loaclStorage agarra el ultimo id y se lo pone a la siguiente parea
   useEffect(() => {
@@ -59,19 +58,14 @@ export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
           setTareas((prev) => [...prev, dataTarea]);
 
         } else {
-          
-          const b = hora.split(":");
-          const horaSacada = Number(b[0]);
-
           let dataTarea = {
             id,
             tarea: mensaje,
-            hora: horaSacada,
+            hora: hora,
             minutos: minutos,
             tareaEcha:0,
             tareaNoEcha:0
           };
-
           setTareas((prev) => [...prev, dataTarea]);
           setMostrarControlesTareasProgramadas(false)
         }
@@ -115,7 +109,7 @@ export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
           <button className="btn-mandar-mensaje">Enviar</button>
         </>
       )}
-      {mostrarControlesTareasTemporizadas && (
+      {/* {mostrarControlesTareasTemporizadas && (
         <>
           <input
             className="input-escribir-mensaje"
@@ -125,8 +119,8 @@ export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
           />
           <button className="btn-mandar-mensaje">Enviar</button>
         </>
-      )}
-      {mostrarControlesTareasRandoms && (
+      )} */}
+      {/* {mostrarControlesTareasRandoms && (
         <>
           <input
             ref={inputTarea}
@@ -137,7 +131,7 @@ export const ControlesFrom = ({ hora, minutos ,setMostrarBoxNumeber}) => {
           />
           <button className="btn-mandar-mensaje">Enviar</button>
         </>
-      )}
+      )} */}
     </form>
   );
 };

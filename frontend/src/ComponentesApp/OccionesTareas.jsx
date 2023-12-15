@@ -11,7 +11,6 @@ export const OccionesTareas = ({ icono, boleano1, boleano2, boleano3 ,title}) =>
   //hoocks
   const [mostrarAnimacionIcono, setMostrarAnimacionIcono] = useState(false);
 
-
   return (
     <div
     title={`${title}`} 
